@@ -1,0 +1,9 @@
+{% extends "header.html" %}
+{% block content %}
+
+<h1> Results (click to add) </h1>
+{% for r in results %}
+    <li><a href="{{ url_for('songs.submit', gid=gid, s=r) }}"> {{r}} </a> </li>
+{% endfor %}
+
+{% endblock %}

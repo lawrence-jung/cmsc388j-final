@@ -1,0 +1,82 @@
+{% extends "header.html" %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1>Your Groups</h1>
+    </div>
+</div>
+
+<div class="row">
+    {% for g in groups %}
+        <div class="col">
+        {% if not g.over %}
+
+                <a href="{{ url_for('songs.g', gid=g.g_id)   }}"> {{g.name}}</a>
+                <b1>{{g.expiry}} days left</b1> 
+
+                {% for m in g.members %}
+                    <li> {{m}} </li>
+                {% endfor %}
+
+        
+        {% else %} 
+
+                <a href="{{ url_for('songs.g', gid=g.g_id)   }}"> {{g.name}}</a>
+                <b1>Complete</b1> 
+
+                {% for m in g.members %}
+                    <li> {{m}} </li>
+                {% endfor %}
+
+        {% endif %}
+           
+        </div>         
+    {% endfor %}
+</div>  
+
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="col">
+    <h1>Create New Group</h1> 
+        <form action="" method="post">
+            {{ cg_form.csrf_token }}
+            <div class="form-group">
+                {{ cg_form.name.label(class="form-control-label") }}
+                {{ cg_form.name(class="form-control form-control-lg") }}
+
+                {% if cg_form.name.errors %}
+                <div class="alert alert-warning" role="alert">
+                    {% for error in cg_form.name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div>
+                <b1> Number of days to submit </b1>
+                {{ cg_form.expiry(class="form-control form-control-lg") }}
+
+                {% if cg_form.name.errors %}
+                <div class="alert alert-warning" role="alert">
+                    {% for error in cg_form.name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div>
+                <b1> Let anyone invite? </b1>{{ cg_form.anyone_can_invite }}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ cg_form.submit }}
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}>
